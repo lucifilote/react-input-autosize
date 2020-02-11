@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import AutosizeInput from 'react-input-autosize';
+import Autocomplete from './autocomplete';
 
 import './example.less';
 
@@ -17,6 +18,7 @@ class App extends Component {
 			value5: '',
 		};
 	}
+
 	updateInputValue = (input, event) => {
 		const newState = {};
 		newState[input] = event.target.value;
@@ -40,9 +42,9 @@ class App extends Component {
 				/>
 				<h3>Typed example with default value:</h3>
 				<AutosizeInput
-					value={this.state.value3}
+					value={this.state.value2}
 					type="number"
-					onChange={this.updateInputValue.bind(this, 'value3')}
+					onChange={this.updateInputValue.bind(this, 'value2')}
 				/>
 				<h3>Input with placeholder:</h3>
 				<AutosizeInput
@@ -61,9 +63,18 @@ class App extends Component {
 					style={{ background: '#eee', borderRadius: 5, padding: 5 }}
 					inputStyle={{ border: '1px solid #999', borderRadius: 3, padding: 3, fontSize: 14 }}
 				/>
+				<h3>Autocomplete React Autosize</h3>
+				<AutosizeInput
+					value={this.state.value1}
+					onChange={this.updateInputValue.bind(this, 'value1')}
+					renderInput={(inputProps) => {
+						return <Autocomplete inputProps={inputProps}/>;
+					}}
+				/>
+
 			</div>
 		);
 	}
 };
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App/>, document.getElementById('app'));
