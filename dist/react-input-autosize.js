@@ -400,18 +400,21 @@ var AutosizeInput = function (_Component) {
 				width: this.state.inputWidth + 'px'
 			}, this.props.inputStyle);
 
-			var inputProps = objectWithoutProperties(this.props, []);
+			var _props = this.props,
+			    renderInput = _props.renderInput,
+			    inputProps = objectWithoutProperties(_props, ['renderInput']);
 
 			cleanInputProps(inputProps);
 			inputProps.className = this.props.inputClassName;
 			inputProps.id = this.state.inputId;
 			inputProps.style = inputStyle;
+			inputProps.ref = this.inputRef;
 
 			return React__default.createElement(
 				'div',
 				{ className: this.props.className, style: wrapperStyle },
 				this.renderStyles(),
-				React__default.createElement('input', _extends({}, inputProps, { ref: this.inputRef })),
+				renderInput ? renderInput(inputProps) : React__default.createElement('input', inputProps),
 				React__default.createElement(
 					'div',
 					{ ref: this.sizerRef, style: sizerStyle },
@@ -444,6 +447,7 @@ AutosizeInput.propTypes = {
 	onChange: PropTypes.func, // onChange handler: function(event) {}
 	placeholder: PropTypes.string, // placeholder text
 	placeholderIsMinWidth: PropTypes.bool, // don't collapse size to less than the placeholder
+	renderInput: PropTypes.func, // custom input renderer
 	style: PropTypes.object, // css styles for the outer element
 	value: PropTypes.any // field value
 };
